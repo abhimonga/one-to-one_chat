@@ -2,9 +2,12 @@
   "name": "chat-app",
   "version": "1.0.0",
   "main": "app.js",
-  "scripts": { "start" : "node app.js" } ,
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
     "body-parser": "^1.17.2",
+    "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.3",
     "crypto": "0.0.3",
     "ejs": "^2.5.6",
