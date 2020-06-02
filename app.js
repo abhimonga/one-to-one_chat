@@ -105,6 +105,6 @@ app.use(function(req,res,next){
 	}
 });//end of Logged In User.
 const port=process.env.port||8080;
-http.listen(port,'0.0.0.0',function(){
+app.listen(port,function(){
   console.log(`Chat App started at port : ${port}`);
 });
