@@ -11,99 +11,99 @@ var path = require('path');
 var fs = require('fs');
 var logger = require('morgan');
 
-// app.use(logger('dev'));
+app.use(logger('dev'));
 
-// //socket.io
-// require('./library/Chat.js').sockets(http);
+//socket.io
+require('./library/Chat.js').sockets(http);
 const port=process.env.port||8080;
 
-// //db connection
-// mongoose.Promise = global.Promise;
-// var uri = "mongodb+srv://abhinav:Abhi%401604@cluster0-tklbj.mongodb.net/test?retryWrites=true&w=majority";
-// mongoose.connect( uri, {useNewUrlParser: true, useUnifiedTopology: true});
+//db connection
+mongoose.Promise = global.Promise;
+var uri = "mongodb+srv://abhinav:Abhi%401604@cluster0-tklbj.mongodb.net/test?retryWrites=true&w=majority";
+mongoose.connect( uri, {useNewUrlParser: true, useUnifiedTopology: true});
 
-// mongoose.connection.once('open',function(){
-//   console.log("Database Connected Successfully.");
-// });
-// var userModel = mongoose.model('user');
+mongoose.connection.once('open',function(){
+  console.log("Database Connected Successfully.");
+});
+var userModel = mongoose.model('user');
 
-// //http method override middleware
-// app.use(methodOverride(function(req,res){
-//   if(req.body && typeof req.body === 'object' && '_method' in req.body){
-//     var method = req.body._method;
-//     delete req.body._method;
-//     return method;
-//   }
-// }));
+//http method override middleware
+app.use(methodOverride(function(req,res){
+  if(req.body && typeof req.body === 'object' && '_method' in req.body){
+    var method = req.body._method;
+    delete req.body._method;
+    return method;
+  }
+}));
 
-// // Session setup for cookies
-// var sessionInit = session({
-//                     name : 'userCookie',
-//                     secret : '9743-980-270-india',
-//                     resave : true,
-//                     httpOnly : true,
-//                     saveUninitialized: true,
-//                     store : new mongoStore({mongooseConnection : mongoose.connection}),
-//                     cookie : { maxAge : 80*80*800 }
-//                   });
+// Session setup for cookies
+var sessionInit = session({
+                    name : 'userCookie',
+                    secret : '9743-980-270-india',
+                    resave : true,
+                    httpOnly : true,
+                    saveUninitialized: true,
+                    store : new mongoStore({mongooseConnection : mongoose.connection}),
+                    cookie : { maxAge : 80*80*800 }
+                  });
 
-// app.use(sessionInit);
-// app.use(express.static(path.resolve(__dirname,'./public')));
+app.use(sessionInit);
+app.use(express.static(path.resolve(__dirname,'./public')));
 
-// // Setting ejs view engine
-// app.set('view engine', 'ejs');
-// app.set('views', path.resolve(__dirname,'./app/views'));
+// Setting ejs view engine
+app.set('view engine', 'ejs');
+app.set('views', path.resolve(__dirname,'./app/views'));
 
-// app.use(bodyParser.json({limit:'10mb',extended:true}));
-// app.use(bodyParser.urlencoded({limit:'10mb',extended:true}));
-// app.use(cookieParser());
+app.use(bodyParser.json({limit:'10mb',extended:true}));
+app.use(bodyParser.urlencoded({limit:'10mb',extended:true}));
+app.use(cookieParser());
 
-// //including models files.
-// fs.readdirSync("./app/models").forEach(function(file){
-//   if(file.indexOf(".js")){
-//     require("./app/models/" + file);
-//   }
-// });
+//including models files.
+fs.readdirSync("./app/models").forEach(function(file){
+  if(file.indexOf(".js")){
+    require("./app/models/" + file);
+  }
+});
 
-// //including controllers files.
-// fs.readdirSync("./app/controllers").forEach(function(file){
-//   if(file.indexOf(".js")){
-//     var route = require("./app/controllers/" + file);
-//     route.controller(app);
-//   }
-// });
+//including controllers files.
+fs.readdirSync("./app/controllers").forEach(function(file){
+  if(file.indexOf(".js")){
+    var route = require("./app/controllers/" + file);
+    route.controller(app);
+  }
+});
 
-// // Error Handler
-// app.use(function(req,res){
-//   res.status(404).render('message',
-//       {
-//           title: "404",
-//           msg: "Page Not Found.",
-//           status: 404,
-//           error: "",
-//           user: req.session.user,
-//           chat: req.session.chat
-//       });
-// });
+// Error Handler
+app.use(function(req,res){
+  res.status(404).render('message',
+      {
+          title: "404",
+          msg: "Page Not Found.",
+          status: 404,
+          error: "",
+          user: req.session.user,
+          chat: req.session.chat
+      });
+});
 
-// app.use(function(req,res,next){
+app.use(function(req,res,next){
 
-// 	if(req.session && req.session.user){
-// 		userModel.findOne({'email':req.session.user.email},function(err,user){
+	if(req.session && req.session.user){
+		userModel.findOne({'email':req.session.user.email},function(err,user){
 
-// 			if(user){
-//         req.user = user;
-//         delete req.user.password;
-// 				req.session.user = user;
-//         delete req.session.user.password;
-// 				next();
-// 			}
-// 		});
-// 	}
-// 	else{
-// 		next();
-// 	}
-// });//end of Logged In User.
+			if(user){
+        req.user = user;
+        delete req.user.password;
+				req.session.user = user;
+        delete req.session.user.password;
+				next();
+			}
+		});
+	}
+	else{
+		next();
+	}
+});//end of Logged In User.
 
 
 http.listen(port,'0.0.0.0',function(){
