@@ -1,15 +1,8 @@
 {
-  "name": "socket-chat-app",
-  "version": "0.0.1",
-  "description": "A Real Time Chat Application built using Node.js, ExpressJs, MongoDB and Socket.io.",
+  "name": "chat-app",
+  "version": "1.0.0",
   "main": "app.js",
-  "keywords": [
-    "nodejs",
-    "expressjs",
-    "mongodb",
-    "socket.io",
-    "chat-app"
-  ],
+  "start":"node app.js",
   "dependencies": {
     "body-parser": "^1.17.2",
     "cookie-parser": "^1.4.3",
