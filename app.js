@@ -15,7 +15,7 @@ app.use(logger('dev'));
 
 //socket.io
 require('./library/Chat.js').sockets(http);
-const port=process.env.port||8080;
+const port=process.env.PORT||8080;
 
 //db connection
 mongoose.Promise = global.Promise;
