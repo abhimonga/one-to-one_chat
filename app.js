@@ -10,12 +10,12 @@ var methodOverride = require('method-override');
 var path = require('path');
 var fs = require('fs');
 var logger = require('morgan');
-const MongoClient = require('mongodb').MongoClient;
 
 app.use(logger('dev'));
 
 //socket.io
 require('./library/Chat.js').sockets(http);
+const port=process.env.port||8080;
 
 //db connection
 mongoose.Promise = global.Promise;
@@ -104,7 +104,8 @@ app.use(function(req,res,next){
 		next();
 	}
 });//end of Logged In User.
-const port=process.env.port||8080;
-app.listen(port,function(){
+
+
+http.listen(port,'0.0.0.0',function(){
   console.log(`Chat App started at port : ${port}`);
 });
